@@ -12,15 +12,23 @@ public class Hanoi {
     private static StringBuilder moves = new StringBuilder();
 
     public static void main(String[] args) {
+        long start;
+        long finish;
+
         n = Integer.parseInt(args[0]);
         x = range(n);
         y = new Stack<>();
         z = new Stack<>();
+
         display(x, y, z);
+
+        start = System.currentTimeMillis();
         hanoi(n, x, z, y);
+        finish = System.currentTimeMillis();
+
         display(x, y, z);
-        System.out.println(moves.toString());
-        System.out.println(String.format("%s moves, %s iterations", numberOfMoves, iterations));
+        //System.out.println(moves.toString());
+        System.out.println(String.format("%s iterations and %s moves in %s ms", iterations, numberOfMoves, finish - start));
     }
 
     private static void hanoi(final int n, Stack<Integer> x, Stack<Integer> z, Stack<Integer> y) {
@@ -62,7 +70,7 @@ public class Hanoi {
         return a;
     }
     private static String stringify(Stack<Integer> a) {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder("\n");
         sb.append("[");
         sb.append(label(a));
         sb.append("]");
@@ -72,7 +80,6 @@ public class Hanoi {
     private static void display(Stack<Integer> x, Stack<Integer> y, Stack<Integer> z) {
         StringBuilder sb = new StringBuilder();
         sb.append("[Iteration " + iterations + "]");
-        sb.append("\n");
         final String w[] = new String [] {
                 stringify(x),
                 stringify(y),
@@ -80,22 +87,20 @@ public class Hanoi {
         };
         Arrays.sort(w);
         sb.append(w[0]);
-        sb.append("\n");
         sb.append(w[1]);
-        sb.append("\n");
         sb.append(w[2]);
-        sb.append("\n");
         sb.append(hr(n));
-        sb.append("\n");
         System.out.print(sb.toString());
     }
     private static String hr(final int n) {
         final int MAX_LENGTH = (n < 10) ? n :
                 (n < 100) ? (9 + 2 * (n - 9)) : 200;
-        StringBuilder sb = new StringBuilder("+");
+
+        StringBuilder sb = new StringBuilder("\n+");
         for(int i = 0; i < MAX_LENGTH + n; i++) {
             sb.append("-");
         }
+        sb.append("\n");
         return sb.toString();
     }
 }
